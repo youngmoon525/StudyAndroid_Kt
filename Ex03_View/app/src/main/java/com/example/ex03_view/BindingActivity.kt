@@ -1,5 +1,7 @@
 package com.example.ex03_view
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +28,21 @@ class BindingActivity : AppCompatActivity() {
         
         binding.button1.setOnClickListener{
             Toast.makeText(applicationContext, "이것은 메세지", Toast.LENGTH_SHORT).show()
+        }
+        binding.button2.setOnClickListener{
+
+            if(binding.edtId.text.toString().equals("admin")
+                && binding.edtId.text.toString().equals("admin")){
+                Log.d("로그인 성공" , "onCreate: ")
+            }
+        }
+        binding.btnNaver.setOnClickListener{
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.naver.com"));
+            startActivity(intent);
+        }
+        binding.btnNew.setOnClickListener{
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
