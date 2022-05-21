@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ex03_view"
-    >
-<uses-permission android:name="android.permission.INTERNET"/>
+    package="com.example.ex03_view">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ex03_View">
+        <activity
+            android:name=".Ex04_VIewEvent"
+            android:exported="false" />
+        <activity
+            android:name=".EtcViewActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
