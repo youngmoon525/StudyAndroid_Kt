@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.AudioAttributes
@@ -75,7 +77,9 @@ class MainActivity : AppCompatActivity() {
         }else{
             builder = NotificationCompat.Builder(this)
         }
-
+        val detailIntent = Intent(this,DetailActivity::class.java);
+        val pendingIntent = PendingIntent.getActivity(this,10,detailIntent,PendingIntent.FLAG_IMMUTABLE);
+        builder.setContentIntent(pendingIntent)
         builder.setSmallIcon(android.R.drawable.ic_notification_overlay)
         builder.setWhen(System.currentTimeMillis())
         builder.setContentTitle("타이틀 입니다")
