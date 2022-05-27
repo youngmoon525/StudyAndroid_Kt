@@ -22,11 +22,16 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
