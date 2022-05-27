@@ -37,10 +37,7 @@ ImageView image;
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == RESULT_OK) {
-                    Log.d(TAG, "onActivityResult: " + result.getData().getAction());
-                    Log.d(TAG, "onActivityResult: " +result.getData().getData());
-                    Log.d(TAG, "onActivityResult: " +result.getData().getData().getPath());
-                    Glide.with(MainActivity.this).load(result.getData().getData().getPath()).load(image);
+                    Glide.with(MainActivity.this).load(result.getData().getData()).into(image);
 
                 }
             }
