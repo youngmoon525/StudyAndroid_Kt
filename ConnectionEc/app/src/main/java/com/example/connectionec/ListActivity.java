@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.connectionec.retrofit.CommonAskTask;
 import com.example.connectionec.retrofit.CommonMethod;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -24,11 +25,12 @@ public class ListActivity extends AppCompatActivity {
                 CommonAskTask conn = new CommonAskTask(ListActivity.this ,new CommonAskTask.AsyckTaskCallback() {
                     @Override
                     public void onResult(String result) {
+
+                        ArrayList<CustomerVO> list = (ArrayList<CustomerVO>) CommonMethod.getList(result,new TypeToken<ArrayList<CustomerVO>>(){});
 /*
                         List<CustomerVO> list =   new Gson().fromJson(result,
                                 new TypeToken<List<CustomerVO>>() {
                                 }.getType());*/
-                        ArrayList<CustomerVO> list = (ArrayList<CustomerVO>) CommonMethod.getList(result);
                         Log.d("Ag", "onResult: " + list.get(0).getEmail());
 
                     }
