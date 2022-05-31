@@ -12,5 +12,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_list"
         android:text="리스트 전송하고 받아오기"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_file"
+        android:text="파일 전송하고 받아오기"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgv"
+        />
 </LinearLayout>

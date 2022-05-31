@@ -3,21 +3,50 @@ package com.example.connectionec.retrofit;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import okhttp3.MultipartBody;
 
 public class CommonAskTask extends AsyncTask<String , String , String > {
-    public AsyckTaskCallback callback;
-    public Exception askException;
-    ProgressDialog dialog ;
-    public CommonAskTask(Context context  ,  AsyckTaskCallback callback) {
-        this.callback = callback;
-        this.dialog = new ProgressDialog(context);
+    public enum Category{
+       SEND_PARAMS , SEND_FILEPARAMS
+    }
+    Category category;
 
+    public AsyckTaskCallback callback;
+    ProgressDialog dialog ;
+    HashMap<String , Object> params ;
+    List<MultipartBody.Part> files;
+    String url;
+    public CommonAskTask(String url , Context context) {
+        this.dialog = new ProgressDialog(context);
+        this.params = new HashMap<>();
+        this.files = new ArrayList<>();
+        this.url = url;
+    }
+
+    public void setParams(HashMap<String,Object> params){
+        this.params = params;
+    }
+
+    public void setParams(String key , Object value){
+        this.params.put(key,value);
+    }
+    public void setFiles(List<MultipartBody.Part> files){
+        this.files = files;
+    }
+    public void setFiles(MultipartBody.Part file){
+        this.files.add(file);
+    }
+
+    public void excuteAsk(Category category, AsyckTaskCallback callback){
+        this.callback = callback;
+        this.category = category;
+        this.execute();
     }
 
     @Override
@@ -30,18 +59,20 @@ public class CommonAskTask extends AsyncTask<String , String , String > {
 
     @Override
     protected String doInBackground(String... strings) {
-        Gson gson = new Gson();
-        gson.toJson("" , String.class);
         String rtnData = null;
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         try {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("data", "Send!!");
-            rtnData = apiInterface.getData("test", map).execute().body();
-            Log.d("TAG", "onClick: " + rtnData);
+            if(category == Category.SEND_PARAMS) {
+                rtnData = apiInterface.getData(url, params).execute().body();
+
+            }else if(category == Category.SEND_FILEPARAMS){
+                rtnData = apiInterface.sendFile(   files ).execute().body();
+
+            }
             return rtnData;
         } catch (IOException e) {
-            return e.getMessage();
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -49,10 +80,15 @@ public class CommonAskTask extends AsyncTask<String , String , String > {
     protected void onPostExecute(String s) {
         if(dialog == null) return;
         dialog.dismiss();
-        callback.onResult(s);
+        if(s != null){
+            callback.onResult(s , true);
+        }else {
+            callback.onResult(s, false);
+
+        }
     }
     public interface AsyckTaskCallback{
-        void onResult(String result);
+        void onResult(String data , boolean result);
     }
 
 }
